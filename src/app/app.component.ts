@@ -50,7 +50,7 @@ export class AppComponent {
     this.testForm = this.fb.group({
       number: [null, Validators.compose([Validators.required, Validators.min(20), Validators.max(100)])],
       companyName: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)])],
-      annualSales: [10, Validators.compose([Validators.required, Validators.min(.01), Validators.max(5)])],
+      annualSales: [null, Validators.compose([Validators.required, Validators.min(.01), Validators.max(5)])],
     })
   }
 
@@ -63,10 +63,12 @@ export class AppComponent {
 
   amountChanged(event: string) {
     this.amount = event;
+    this.testForm.get('annualSales').patchValue(event);
+    this.testForm.updateValueAndValidity();
+    console.log('value: ' + this.testForm.get('annualSales').value);
   }
 
   getFormattedAmount(event: string) {
-    console.log('PARENT > getFormattedAmount');
     this.formattedAmount = event;
   }
 

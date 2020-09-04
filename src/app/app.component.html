@@ -55,12 +55,13 @@
         {{ testForm.get('annualSales') }}</h2>
 
       <h2 [ngStyle]="{'background-color': testForm.get('annualSales').value ? 'green' : 'red'}">Value:
-        {{ testForm.get('annualSales').value }} </h2>
+        {{ this.testForm.get('annualSales').value }} </h2>
 
 
+        <h2> {{ testForm.get('annualSales').value }}</h2>
         
       <app-custom-input formControlName="annualSales" (amountEntered)="amountChanged($event)"
-        (formattedAmount)="getFormattedAmount($event)"   [precision]="2" [maxLength]="7" [amount]="''">
+        (formattedAmount)="amountChanged($event)" [precision]="2" [maxLength]="7" [amount]="''">
       </app-custom-input>
       <!-- can set disabled, -->
       <ng-container *ngFor="let validation of validation_messages.annualSales">
