@@ -6,12 +6,11 @@
         {{ formattedAmount }}
         <ion-input 
             [disabled]="disabled"
-            (blur)="onTouched()" 
             #dummyFacade 
             id="dummyFacade"
             inputmode="numeric" 
-            (ionInput)="handleInput($event); onChange($event.target.value)"
-            (keyup)="handleKeyUp($event)"
+            (ionInput)="handleInput($event); onChange(getTrimmedAmount())"
+            (keyup)="handleKeyUp($event); onChange(getTrimmedAmount()) "
             name="dummyFacade" 
             type="number" 
         >

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,19 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
 
+  numberMax = 100;
+  numberMin = 20;
+
+  companyNameMaxLength = 20;
+  companyNameMinLength = 3;
+
+  annualSalesMax = 50000;
+  annualSalesMin = 100;
   validation_messages = {
     'number': [
-      { type: 'min', message: 'Number must be at least 20' },
+      { type: 'min', message: 'Minimum Number is: ' + this.numberMin },
       { type: 'required', message: 'Number is required' },
-      { type: 'max', message: 'Max number is 100' }
+      { type: 'max', message: 'Max number is: ' + this.numberMax }
     ],
     'companyName': [
       { type: 'minlength', message: 'Must be at least 3 characters' },
@@ -24,8 +33,8 @@ export class AppComponent {
     ],
     'annualSales': [
       { type: 'required', message: 'This field is required' },
-      { type: 'max', message: 'Max...' },
-      { type: 'min', message: 'Min...' },
+      { type: 'max', message: 'Max annual sales are: $' + this.annualSalesMax},
+      { type: 'min', message: 'Min annual sales are: $' + this.currencyPipe.transform(this.annualSalesMin) },
     ],
   };
   newInput: any;
@@ -37,6 +46,7 @@ export class AppComponent {
   // formattedAmount = '';
 
   constructor(
+    private currencyPipe: CurrencyPipe,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -50,7 +60,7 @@ export class AppComponent {
     this.testForm = this.fb.group({
       number: [null, Validators.compose([Validators.required, Validators.min(20), Validators.max(100)])],
       companyName: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)])],
-      annualSales: [null, Validators.compose([Validators.required, Validators.min(10), Validators.max(50.00)])],
+      annualSales: [null, Validators.compose([Validators.required, Validators.min(this.annualSalesMin), Validators.max(this.annualSalesMax)])],
     })
   }
 
@@ -66,12 +76,8 @@ export class AppComponent {
     this.amount = event;
     this.testForm.get('annualSales').patchValue(event);
     this.testForm.updateValueAndValidity();
-    console.log('value: ' + this.testForm.get('annualSales').value);
+    // console.log('value: ' + this.testForm.get('annualSales').value);
   }
-
-  // getFormattedAmount(event: string) {
-  //   this.formattedAmount = event;
-  // }
 
   submit() {
     console.log('form: ' + JSON.stringify(this.testForm.value));
@@ -79,6 +85,10 @@ export class AppComponent {
 
   showFormValues() { 
     console.log(JSON.stringify(this.testForm.value))
+  }
+
+  getErrorList(errorObject) {
+    return Object.keys(errorObject);
   }
 
 
