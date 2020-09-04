@@ -34,7 +34,7 @@ export class AppComponent {
 
   valid: false;
   amount = '';
-  formattedAmount = '';
+  // formattedAmount = '';
 
   constructor(
     private platform: Platform,
@@ -50,7 +50,7 @@ export class AppComponent {
     this.testForm = this.fb.group({
       number: [null, Validators.compose([Validators.required, Validators.min(20), Validators.max(100)])],
       companyName: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)])],
-      annualSales: [null, Validators.compose([Validators.required, Validators.min(.01), Validators.max(5)])],
+      annualSales: [null, Validators.compose([Validators.required, Validators.min(10), Validators.max(50.00)])],
     })
   }
 
@@ -62,20 +62,24 @@ export class AppComponent {
   }
 
   amountChanged(event: string) {
+    console.log('amountChanged(): ' + event);
     this.amount = event;
     this.testForm.get('annualSales').patchValue(event);
     this.testForm.updateValueAndValidity();
     console.log('value: ' + this.testForm.get('annualSales').value);
   }
 
-  getFormattedAmount(event: string) {
-    this.formattedAmount = event;
-  }
+  // getFormattedAmount(event: string) {
+  //   this.formattedAmount = event;
+  // }
 
   submit() {
-    console.log('form submitted');
     console.log('form: ' + JSON.stringify(this.testForm.value));
-    console.log('child form: ' + JSON.stringify(this.testForm.get('annualSales').value));
   }
+
+  showFormValues() { 
+    console.log(JSON.stringify(this.testForm.value))
+  }
+
 
 }

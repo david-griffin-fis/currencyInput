@@ -4,9 +4,6 @@
     </label>
     <ion-item (click)="openInput()">
         {{ formattedAmount }}
-        <!-- (ionInput)="handleInput($event.target.value)"" -->
-        <!-- (input)="handleInput($event.target.value)" -->
-        <!-- [value]="this.getTrimmedValue()"  -->
         <ion-input 
             [disabled]="disabled"
             (blur)="onTouched()" 
@@ -18,7 +15,6 @@
             name="dummyFacade" 
             type="number" 
         >
-        <!-- [value]="value"  -->
         </ion-input>
     </ion-item>
 </div>

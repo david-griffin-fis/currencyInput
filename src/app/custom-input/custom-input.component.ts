@@ -54,6 +54,10 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor {
         this.clearInput();
         // check if digit
         if (event.detail.data && !isNaN(event.detail.data)) {
+            if(this.amount.length >= this.maxLength) {
+                console.log('max digits reached');
+                return;
+            }
             this.addDigit(event.detail.data);
         } else if (event.detail.inputType === CustomInputComponent.BACKSPACE_INPUT_TYPE) {
             // handles numpad input for delete/backspace
@@ -62,14 +66,15 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor {
     }
 
     private addDigit(key: string) {
-        if (this.amount.length >= this.maxLength) {
-            console.log('max digits reached');
-            return;
-        }
-        else {
+        // if (this.amount.length >= this.maxLength) {
+        //     console.log('max digits reached');
+        //     return;
+        // }
+        // else {
             this.amount = this.amount + key;
+            console.log('in addDigit, emitting this.getTrimmedAmount(): ' + +this.getTrimmedAmount());
             this.amountEntered.emit(+this.getTrimmedAmount());
-        }
+        // }
     }
 
     getTrimmedAmount(): string {
@@ -82,15 +87,19 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor {
 
     private delDigit() {
         this.amount = this.amount.substring(0, this.amount.length - 1);
+        // this.value = +this.amount;
+        console.log('in delDigit, emitting amoountEntered.emit(+this.amount): ' + +this.amount);
         this.amountEntered.emit(+this.amount);
     }
 
     private clearInput() {
+        console.log('in clearInput(), value is: ' + this.value);
         this.dummyFacade.value = ''; // ensures works on mobile devices
         //ensure works on browser
         this.dummyFacade.getInputElement().then((native: HTMLInputElement) => {
             native.value = '';
         });
+        console.log('end of clearInput, value is: ' + this.value);
     }
 
     get formattedAmount(): string {
@@ -108,7 +117,6 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor {
     }
 
     registerOnChange(fn: any): void {
-        // this.addDigit = fn;
         this.onChange = fn;
     }
     registerOnTouched(fn: any): void {

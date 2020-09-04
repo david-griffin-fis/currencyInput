@@ -54,19 +54,21 @@
       <h2 [ngStyle]="{'background-color': testForm.get('annualSales').get ? 'red' : 'green'}">Get:
         {{ testForm.get('annualSales') }}</h2>
 
-      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').value ? 'green' : 'red'}">Value:
-        {{ this.testForm.get('annualSales').value }} </h2>
+      <h2>Value: {{ this.testForm.get('annualSales').value }} </h2>
 
 
-        <h2> {{ testForm.get('annualSales').value }}</h2>
-        
+      <h2> {{ testForm.get('annualSales').value }}</h2>
+
       <app-custom-input formControlName="annualSales" (amountEntered)="amountChanged($event)"
         (formattedAmount)="amountChanged($event)" [precision]="2" [maxLength]="7" [amount]="''">
       </app-custom-input>
       <!-- can set disabled, -->
+
       <ng-container *ngFor="let validation of validation_messages.annualSales">
         <ion-row *ngIf="testForm.get('annualSales').hasError(validation.type)"></ion-row>
       </ng-container>
+
+      <ion-button (click)="showFormValues()">Show Form Values</ion-button>
 
       <ion-button (click)="submit()">Submit</ion-button>
     </form>
