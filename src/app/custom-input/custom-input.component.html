@@ -1,0 +1,24 @@
+<div class="form-group">
+    <label>
+        <ng-content></ng-content>
+    </label>
+    <ion-item (click)="openInput()">
+        {{ formattedAmount }}
+        <!-- (ionInput)="handleInput($event.target.value)"" -->
+        <!-- (input)="handleInput($event.target.value)" -->
+        <!-- [value]="this.getTrimmedValue()"  -->
+        <ion-input 
+            [disabled]="disabled"
+            (blur)="onTouched()" 
+            #dummyFacade 
+            id="dummyFacade"
+            inputmode="numeric" 
+            (ionInput)="handleInput($event); onChange($event.target.value)"
+            (keyup)="handleKeyUp($event)"
+            name="dummyFacade" 
+            type="number" 
+        >
+        <!-- [value]="value"  -->
+        </ion-input>
+    </ion-item>
+</div>

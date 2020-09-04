@@ -1,22 +1,25 @@
 import { NgModule } from '@angular/core';
+import { FinalInputComponent } from '../app/final-input/final-input.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
-
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-@NgModule({
-  declarations: [AppComponent],
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NumberInputComponent } from '../app/number-input/number-input.component';
+import { LimitToDirective } from './limit-to.directive';
+import { CustomInputComponent } from '../app/custom-input/custom-input.component';
+import { CurrencyInputComponent } from '../app/currency-input/currency-input.component';
+@NgModule({ 
+  declarations: [AppComponent, CustomInputComponent, NumberInputComponent, LimitToDirective, FinalInputComponent, CurrencyInputComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [CommonModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    CurrencyPipe
   ],
   bootstrap: [AppComponent]
 })

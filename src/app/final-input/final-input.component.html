@@ -1,0 +1,26 @@
+<ion-item (click)="openInput(); onTouched()">
+  {{ formattedAmount }}
+  <ion-input 
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    [value]="formattedAmount"
+    name="dummyFacade" 
+    id="dummyFacade" 
+    #dummyFacade 
+    type="number" 
+    inputmode="numeric"
+    (keyup)="handleKeyUp($event)" 
+    (input)="onChange($event.target.value)"
+    (ionInput)="handleEvent($event)"
+    >
+  </ion-input>
+</ion-item>
+
+<!-- <ion-input 
+  [disabled]="disabled"
+  (ionBlur)="onTouched($event.target.value)"
+  type="number" 
+  [value]="value"
+  class="form-control"
+  (ionInput)="onChange($event.target.value)"
+  ></ion-input> -->

@@ -1,3 +1,73 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-content class="ion-padding">
+    <form [formGroup]="testForm">
+      <ion-item>
+        <ion-label position="floating">Number</ion-label>
+        <ion-input formControlName="number" name="number" placeholder="number" type="number"></ion-input>
+      </ion-item>
+
+      <ng-container *ngFor="let validation of validation_messages.number">
+
+        <div class="text-danger"
+          *ngIf="testForm.get('number').hasError(validation.type) && (testForm.get('number').dirty || testForm.get('number').touched)">
+          <div class="error-message">
+            {{ validation.message }}
+          </div>
+        </div>
+
+      </ng-container>
+
+      <ion-item>
+        <ion-label position="floating">Company Name</ion-label>
+        <ion-input formControlName="companyName" name="companyName" placeholder="Company Name"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let validation of validation_messages.companyName">
+        <ion-row
+          *ngIf="testForm.get('companyName').hasError(validation.type) && (testForm.get('companyName').dirty || testForm.get('companyName').touched)">
+          <div class="error-message">
+            {{ validation.message }}
+          </div>
+        </ion-row>
+      </ng-container>
+
+      <h1>Form Status</h1>
+      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').touched ? 'green' : 'red'}">Touched:
+        {{ testForm.get('annualSales').touched }}</h2>
+
+      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').dirty ? 'green' : 'red'}">Dirty:
+        {{ testForm.get('annualSales').dirty }}</h2>
+
+      <h2>Error (min): {{testForm.get('annualSales').hasError('min')}}</h2>
+
+      <h2>Error (max): {{testForm.get('annualSales').hasError('max')}}</h2>
+
+
+      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').hasError('required') ? 'green' : 'red'}">Error:
+        {{ testForm.get('annualSales').hasError('required') }} </h2>
+
+
+      <h2 [ngStyle]="{'background-color': amount ? 'green' : 'red'}">Amount: {{ amount }} </h2>
+
+      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').untouched ? 'red' : 'green'}">Untouched:
+        {{ testForm.get('annualSales').untouched }}</h2>
+
+      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').get ? 'red' : 'green'}">Get:
+        {{ testForm.get('annualSales') }}</h2>
+
+      <h2 [ngStyle]="{'background-color': testForm.get('annualSales').value ? 'green' : 'red'}">Value:
+        {{ testForm.get('annualSales').value }} </h2>
+
+
+        
+      <app-custom-input formControlName="annualSales" (amountEntered)="amountChanged($event)"
+        (formattedAmount)="getFormattedAmount($event)"   [precision]="2" [maxLength]="7" [amount]="''">
+      </app-custom-input>
+      <!-- can set disabled, -->
+      <ng-container *ngFor="let validation of validation_messages.annualSales">
+        <ion-row *ngIf="testForm.get('annualSales').hasError(validation.type)"></ion-row>
+      </ng-container>
+
+      <ion-button (click)="submit()">Submit</ion-button>
+    </form>
+  </ion-content>
 </ion-app>
